@@ -1,16 +1,15 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 
 var PlatoSchema=Schema({
     nombre: String,
 	descripcion: String,
-	precio: String,
+	precio: Number,
 	id: String,
     idtipo: String,
-    img: String
+    imagen: String
 	});
 
 const Plato = mongoose.model('plato',PlatoSchema);
 module.exports = Plato;
-

@@ -1,81 +1,90 @@
-function prueba(req,res){
-    res.status(200).send({
-    message: 'probando una acción'
-    });
+const Plato = require("../models/plato");
+
+const renderPlatoForm = (req, res) => {
+    res.render("platos/nuevo-plato");
 }
 
-function savePlato(req,res){
-    var myPlato=new Plato(req.body);
-    myPlato.savePlato((err,result)=>{
-        res.status(200).send({message:result});
-    });
-}
-
-function buscarData(req,res){
-    var idPlato=req.params.id;
-    Plato.findById(idPlato).exec((err,result)=>{
-        if(err){
-            if(!result){
-                res.status(500).send({message:'Error al momento de ejecutar la solicitud'});
-            }else{
-                if(!result){
-                    res.status(404).send({message:'El registro a buscar no se encuentra disponible'});
-                }else{
-                    res.status(200).send({result});
-                }
-            }
-        }
-    });
-}
-
-function listarAllData(req,res){
-    var idPlato=req.params.idb;
-    if(!idPlato){
-        var result=Plato.find({}).sort('nombre');
-    }else{
-        var result=Plato.find({_id:idPlato}).sort('nombre');
+const createNewPlato = async (req, res) => {
+    const {
+        nombre,
+        descripcion,
+        precio,
+        id,
+        idtipo,
+        imagen} = req.body;
+    const errors = [];
+    if (!nombre) {
+            errors.push({ text: "Por favor escriba un nombre." });
     }
-
-    result.exec(function(err,result){
-        if(err){
-            res.status(500).send({message:'Error al momento de ejecutar la solicitud'});
-        }else{
-            if(!result){
-                res.status(404).send({message:'El registro a buscar no se encuentra disponible'});
-            }else{
-                res.status(200).send({result});
-            }
+    if (!precio) {
+        errors.push({ text: "Por favor digite un precio." });
+    }
+    if (!id) {
+        errors.push({ text: "Por favor digite un id." });
+    }
+    if (!idtipo) {
+        errors.push({ text: "Por favor digite el tipo de plato." });
+    }
+    if (errors.length > 0) {
+        res.render("platos/nuevo-plato", {
+            errors,
+            nombre,
+            descripcion,
+            precio,
+            id,
+            idtipo,
+            imagen
+            });
+        } else {
+            const newPlato = new Plato({
+                nombre,
+                descripcion,
+                precio,
+                id,
+                idtipo,
+                imagen });
+            newPlato.user = req.user.id;
+            await newPlato.save();
+            req.flash("success_msg", "El plato agregado con exito");
+            res.redirect("/platos");
         }
-    })
 }
 
-function updatePlato(req,res){
-    var id = mongoose.Types.ObjectId(req.query.productId);
-    Plato.findOneAndUpdate({_id: id}, req.body, {new: true}, function(err, Plato) {
-        if (err)
-            res.send(err);
-            res.json(Plato);
-        });
+const renderPlato = async (req, res) => {
+    const platos = await Plato.find({ user: req.user.id })
+        .sort({ date: "desc" })
+        .lean();
+    res.render("platos/todos-los-platos", { platos });
 }
 
-function deletePlato(req,res){
-    var idPlato=req.params.id;
-    Plato.findByIdAndRemove(id, function(err, plato){
-        if(err) {
-            return res.json(500, {
-            message: 'No hemos encontrado el plato'
-        })
-        }
-        return res.json(plato)
-    });
+const renderEditForm = async (req, res) => {
+    const plato = await plato.findById(req.params.id).lean();
+    if (plato.user != req.user.id) {
+        req.flash("error_msg", "Not Authorized");
+        return res.redirect("/platos");
+    }
+    res.render("platos/editar-plato", { plato });
 }
 
+const updatePlato = async (req, res) => {
+    const {nombre, descripcion, precio, id, idtipo, imagen } = req.body;
+    await Plato.findByIdAndUpdate(req.params.id, { nombre, descripcion, precio, id, idtipo ,imagen });
+    req.flash("success_msg", "Plato actualizado correctamente");
+    res.redirect("/platos");
+}
+
+const deletePlato = async (req, res) => {
+    await Plato.findByIdAndDelete(req.params.id);
+    req.flash("success_msg", "Plato eliminado correctamente");
+    res.redirect("/platos");
+}
 
 module.exports = {
-    prueba,
-    savePlato,
-    buscarData,
-    listarAllData,
+    renderPlatoForm,
+    createNewPlato,
+    renderPlato,
+    renderEditForm,
     updatePlato,
-    deletePlato
+    deletePlato,
 }
+

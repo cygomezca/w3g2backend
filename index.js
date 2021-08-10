@@ -1,7 +1,9 @@
-var app = require('./app');
-var mongoose = require('./database')
-var port = 4000;
+//Initializations
+const app = require('./app');
+require('./database');
 
-app.listen(port,()=>{
-    console.log("Servidor corriendo ok")
+
+// Settings
+app.listen(app.get('port'), ()=>{
+    console.log('Server on port', app.get('port'))
 });

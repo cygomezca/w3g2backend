@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +18,22 @@
   },
   "homepage": "https://github.com/cygomezca/w3g2backend#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "config": "^3.3.6",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^4.4.1",
     "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongoose": "^5.13.5"
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.13.5",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

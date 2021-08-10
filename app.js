@@ -1,23 +1,59 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
+const express = require('express');
+const path= require('path');
+const session= require('express-session');
+const methodOverride = require("method-override") ;
+const flash = require ("connect-flash");
+const passport = require ("passport");
+const morgan  = require("morgan");
+const MongoStore = require("connect-mongo");
 
+const { createAdminUser } = require ("./libs/createUser");
+const config = require ( "./config");
 
-app.use(express.json());
-app.use(express.urlencoded({
-    extended:true
-}));
+require("./config/passport");
 
-app.use((req,res,next)=>{
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-RequestedWith, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+// Initializations
+const app = express();
+createAdminUser();
+
+// settings
+app.set("port", config.PORT);
+
+// middlewares
+app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
+app.use(
+    session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: config.MONGODB_URI }),
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+// Global Variables
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    res.locals.error = req.flash("error");
+    res.locals.user = req.user || null;
     next();
-    });
+});
 
-//routers
-app.use(require('./routers/routers'))
+// routes
+app.use(require('./routes/index.routes'));
+app.use(require('./routes/platos.routes'));
+app.use(require('./routes/users.routes'));
 
-//Exports
+// static files
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use((req, res) => {
+    res.render("404");
+});
+
 module.exports = app;
