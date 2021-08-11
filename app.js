@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(
     session({
-    secret: "mysecretapp",
+    secret: "secret",
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: config.MONGODB_URI }),
