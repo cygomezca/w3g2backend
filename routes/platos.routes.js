@@ -10,20 +10,20 @@ const {
 
 const router = Router();
 
-// New Note
+// New
 router.get("/platos/add",  renderPlatoForm);
 
 router.post("/platos/nuevo-plato",  createNewPlato);
 
-// Get All Notes
+// Get All
 router.get("/platos",  renderPlato);
 
-// Edit Notes
+// Edit
 router.get("/platos/editar/:id",  renderEditForm);
 
 router.put("/platos/editar-plato/:id",  updatePlato);
 
-// Delete Notes
+// Delete
 router.delete("/plato/eliminar/:id",  deletePlato);
 
 module.exports = router;

@@ -6,16 +6,15 @@ const User= require('../models/user');
 passport.use(
     new LocalStrategy(
       {
-        usernameField: "email",
+        usernameField: 'correo'
       },
-      async (email, password, done) => {
-        // Match Email's User
-        const user = await User.findOne({ email: email });
+      async (correo, password, done) => {
+        const user = await User.findOne({ correo: correo });
         if (!user) {
           return done(null, false, { message: "Not User found." });
         } else {
           // Match Password's User
-          const match = await user.matchPassword(password);
+          const match = await User.matchPassword(password);
           if (match) {
             return done(null, user);
           } else {
@@ -25,11 +24,9 @@ passport.use(
       }
     )
   );
-  
     passport.serializeUser((user, done) => {
     done(null, user.id);
     });
-  
     passport.deserializeUser((id, done) => {
     User.findById(id, (err, user) => {
     done(err, user);
