@@ -5,44 +5,25 @@ const renderPlatoForm = (req, res) => {
 }
 
 const createNewPlato = async (req, res) => {
-    const {
-        nombre,
-        descripcion,
-        precio,
-        id,
-        idtipo,
-        imagen} = req.body;
+    const { name, description, price, id, idtype ,image} = req.body;
     const errors = [];
-    if (!nombre) {
+    if (!name) {
             errors.push({ text: "Por favor escriba un nombre." });
     }
-    if (!precio) {
+    if (!price) {
         errors.push({ text: "Por favor digite un precio." });
     }
     if (!id) {
         errors.push({ text: "Por favor digite un id." });
     }
-    if (!idtipo) {
+    if (!idtype) {
         errors.push({ text: "Por favor digite el tipo de plato." });
     }
     if (errors.length > 0) {
         res.render("platos/nuevo-plato", {
-            errors,
-            nombre,
-            descripcion,
-            precio,
-            id,
-            idtipo,
-            imagen
-            });
+            errors, name, description, price, id, idtype ,image });
         } else {
-            const newPlato = new Plato({
-                nombre,
-                descripcion,
-                precio,
-                id,
-                idtipo,
-                imagen });
+            const newPlato = new Plato({name, description, price, id, idtype ,image });
             newPlato.user = req.user.id;
             await newPlato.save();
             req.flash("success_msg", "El plato agregado con exito");
@@ -67,8 +48,8 @@ const renderEditForm = async (req, res) => {
 }
 
 const updatePlato = async (req, res) => {
-    const {nombre, descripcion, precio, id, idtipo, imagen } = req.body;
-    await Plato.findByIdAndUpdate(req.params.id, { nombre, descripcion, precio, id, idtipo ,imagen });
+    const {name, description, price, id, idtipo, image } = req.body;
+    await Plato.findByIdAndUpdate(req.params.id, { name, description, price, id, idtype ,image });
     req.flash("success_msg", "Plato actualizado correctamente");
     res.redirect("/platos");
 }

@@ -31,9 +31,9 @@ app.use(
     store: MongoStore.create({ mongoUrl: config.MONGODB_URI }),
     })
 );
-app.use(passport.initialize());
+/*app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+app.use(flash()); */
 
 // Global Variables
 app.use((req, res, next) => {

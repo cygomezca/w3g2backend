@@ -1,15 +1,34 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose');
 
-
-var PlatoSchema=Schema({
-    nombre: String,
-	descripcion: String,
-	precio: Number,
-	id: String,
-    idtipo: String,
-    imagen: String
+const PlatoSchema=Schema({
+    name: {
+        type: String,
+        required: [true, 'Schema: El nombre es obligatorio']
+    },
+	description: {
+        type: String,
+        required: [true, 'Schema: La descripcion es obligatoria']
+    },
+	pryce: {
+        type: String,
+        required: [true, 'Schema: El precio es obligatorio']
+    },
+	id: {
+        type: String,
+        required: [true, 'Schema: El id es obligatorio']
+    },
+    idtype: {
+        type: String,
+        required: [true, 'Schema: El idtipo es obligatorio']
+    },
+    image: {
+        type: String,
+        required: [true, 'Schema: La imagen es obligatoria']
+    },
+	state: {
+        type: Boolean,
+        default: true
+    }
 	});
 
-const Plato = mongoose.model('plato',PlatoSchema);
-module.exports = Plato;
+module.exports = model('Plato', PlatoSchema);

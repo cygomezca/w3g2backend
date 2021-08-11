@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose');
 
 
-const tipodeplatoSchema = new Schema(
+const EmpresaSchema = new Schema(
     {
     nombre: {
         type: String,
@@ -27,4 +26,4 @@ const tipodeplatoSchema = new Schema(
     },
 );
 
-module.exports = mongoose.model('empresa',empresaSchema);
+module.exports = model('Empresa', EmpresaSchema);

@@ -1,18 +1,16 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose');
 
-
-const tipodeplatoSchema = new Schema(
+const TipodeplatoSchema = new Schema(
     {
     id: {
         type: String,
         required: true,
     },
-    nombre: {
+    type: {
         type: String,
         required: true,
     },
     },
 );
 
-module.exports = mongoose.model('tipodeplato',tipodeplatoSchema);
+module.exports = model('Tipodeplato',TipodeplatoSchema);
