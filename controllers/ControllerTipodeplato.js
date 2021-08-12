@@ -1,53 +1,40 @@
-const { tipodeplato } = require('../models/');
+const Tipodeplato = require('../models/tipodeplato');
+
+const prueba2 = async (req,res)=> {
+    res.status(200).send({message: 'probando una acción'});
+}
+
+const tipodeplatoAll = async (req, res) => {
+    const tipodeplato = await Tipodeplato.find();
+    res.json(tipodeplato);
+}
+
+
+const tipodeplatoPut = async (req, res) => {
+    const {id, type} = req.body;
+    await Tipodeplato.findByIdAndUpdate(req.params.nombre, { id, type});
+    res.json({id,type});
+}
+
+const tipodeplatoPost = async (req, res) => {
+    const { id, type} = req.body;
+    const tipodeplato = new Tipodeplato({ id,type });
+
+    await tipodeplato.save();
+
+    res.json({tipodeplato});
+}
+const tipodeplatoDelete = (req, res) => {
+    Tipodeplato.findByIdAndDelete(req.params.id);
+        res.json({
+        msg: 'delete API - usuariosDelete'
+    });
+}
 
 module.exports = {
-
-    list : async ( req, res, next) =>  {
-        try{
-            const reg= await tipodeplato.findAll()
-            res.status(200).json(reg)
-
-        } catch (error){
-            res.status(500).json({'error' : ' pasa algo'})
-            next(error)
-        }
-
-    },
-
-    add : async ( req, res, next) =>  {
-        try{
-            const reg= await tipodeplato.created( req.body )
-            res.status(200).json(reg)
-
-        }catch (error){
-            res.status(500).json({'error' : ' pasa algo'})
-            next(error)
-        }
-    },
-
-    update : async ( req, res, next) =>  {
-        try{
-            const reg= await tipodeplato.update({nombre: req.body.nombre, descripcion: req.body.descripcion}, {where: {id: req.body._id}})
-            res.status(200).json(reg)
-            req.flash("success_msg", "Tipo de plato Updated Successfully");
-            res.redirect("/tipodeplato");
-
-        }catch (error){
-            res.status(500).json({'error' : 'Oops pasa algo'})
-            next(error)
-        }
-    },
-
-    delete : async (req, res, next) => {
-        try{
-            const reg= await tipodeplato.findByIdAndDelete(req.params.id);
-            res.status(200).json(reg)
-            req.flash("success_msg", "Tipo de Plato Deleted Successfully");
-            res.redirect("/tipodeplato");
-
-        }catch (error){
-            res.status(500).json({'error' : ' pasa algo'})
-            next(error)
-        }
-    }
+    prueba2,
+    tipodeplatoAll,
+    tipodeplatoPut,
+    tipodeplatoPost,
+    tipodeplatoDelete
 }

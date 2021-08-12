@@ -20,14 +20,10 @@ const createNewPlato = async (req, res) => {
         errors.push({ text: "Por favor digite el tipo de plato." });
     }
     if (errors.length > 0) {
-        res.render("platos/nuevo-plato", {
-            errors, name, description, price, id, idtype ,image });
         } else {
             const newPlato = new Plato({name, description, price, id, idtype ,image });
-            newPlato.user = req.user.id;
             await newPlato.save();
             req.flash("success_msg", "El plato agregado con exito");
-            res.redirect("/platos");
         }
 }
 

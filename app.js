@@ -7,14 +7,15 @@ const passport = require ("passport");
 const morgan  = require("morgan");
 const MongoStore = require("connect-mongo");
 
-const { createAdminUser } = require ("./libs/createUser");
+
+/* const { createAdminUser } = require ("./libs/createUser"); */
 const config = require ( "./config");
 
 require("./config/passport");
 
 // Initializations
 const app = express();
-createAdminUser();
+/*createAdminUser();*/
 
 // settings
 app.set("port", config.PORT);
@@ -31,9 +32,10 @@ app.use(
     store: MongoStore.create({ mongoUrl: config.MONGODB_URI }),
     })
 );
+
 /*app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash()); */
+app.use(flash()); 
 
 // Global Variables
 app.use((req, res, next) => {
@@ -42,13 +44,14 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     res.locals.user = req.user || null;
     next();
-});
+});*/
 
 // routes
 app.use(require('./routes/index.routes'));
-app.use(require('./routes/platos.routes'));
-app.use(require('./routes/users.routes'));
-
+app.use(require('./routes/plato.routes'));
+app.use(require('./routes/user.routes'));
+app.use(require('./routes/empresa.routes'));
+app.use(require('./routes/tipodeplato.routes'));
 // static files
 app.use(express.static(path.join(__dirname, "public")));
 

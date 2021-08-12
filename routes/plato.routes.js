@@ -11,17 +11,17 @@ const {
 const router = Router();
 
 // New
-router.get("/platos/add",  renderPlatoForm);
+router.get("/plato/add",  renderPlatoForm);
 
-router.post("/platos/nuevo-plato",  createNewPlato);
+router.post("/plato/nuevo-plato",  createNewPlato);
 
 // Get All
-router.get("/platos",  renderPlato);
+router.get("/plato",  renderPlato);
 
 // Edit
-router.get("/platos/editar/:id",  renderEditForm);
+router.get("/plato/editar/:id",  renderEditForm);
 
-router.put("/platos/editar-plato/:id",  updatePlato);
+router.put("/plato/editar-plato/:id",  updatePlato);
 
 // Delete
 router.delete("/plato/eliminar/:id",  deletePlato);

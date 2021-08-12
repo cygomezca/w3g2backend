@@ -5,9 +5,8 @@ const UserSchema = new Schema({
     name:{ type:String, required:true},
     email:{type:String, required:true},
     password:{ type:String, required:true},
-    usuario: {type: String, required: true},
-    role: {type: String,required: true},
-    state: {type: Boolean, default: true}
+    role: {type: String},
+    state: {type: Boolean}
 },
     {
     timestamps: true,

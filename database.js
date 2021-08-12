@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const config = require('config');
 
-mongoose.connect('mongodb+srv://dbUser:w3123456@cluster0.tld9e.mongodb.net/test', {
+mongoose.connect('mongodb://localhost/dbrestaurante', {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,

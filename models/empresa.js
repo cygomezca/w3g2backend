@@ -23,7 +23,7 @@ const EmpresaSchema = new Schema(
         type: String,
         required: true,
     }
-    },
+    }
 );
 
 module.exports = model('Empresa', EmpresaSchema);

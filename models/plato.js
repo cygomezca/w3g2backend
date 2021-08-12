@@ -24,10 +24,6 @@ const PlatoSchema=Schema({
     image: {
         type: String,
         required: [true, 'Schema: La imagen es obligatoria']
-    },
-	state: {
-        type: Boolean,
-        default: true
     }
 	});
 

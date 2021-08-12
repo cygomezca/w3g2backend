@@ -1,26 +1,24 @@
-const { empresa } = require('../models/');
+
+const Empresa = require('../models/empresa');
+
+const prueba = async (req,res)=> {
+    res.status(200).send({message: 'probando una acción'});
+}
+
+
+const empresaAll = async (req, res) => {
+    const empresas = await Empresa.find();
+    res.json(empresas);
+}
+
+const empresaPut = async (req, res) => {
+    const {nombre, direccion, departamento, cuidad, telefono} = req.body;
+    await Empresa.findByIdAndUpdate(req.params.nombre, { nombre, direccion, departamento, cuidad, telefono});
+    res.send(Empresa);
+}
 
 module.exports = {
-
-    list : async ( req, res, next) =>  {
-        try{
-            const reg= await empresa.findAll()
-            res.status(200).json(reg)
-
-        } catch (error){
-            res.status(500).json({'error' : ' pasa algo'})
-            next(error)
-        }
-    },
-
-    update : async ( req, res, next) =>  {
-        try{
-            const reg= await empresa.update({direccion: req.body.direccion}, {departamento: req.body.departamento}, {cuidad: req.body.ciudad},{telefono: req.body.telefono},{where: {id: req.body._id}})
-            res.status(200).json(reg)
-
-        }catch (error){
-            res.status(500).json({'error' : 'Oops pasa algo'})
-            next(error)
-        }
-    }
+    prueba,
+    empresaAll,
+    empresaPut
 }
