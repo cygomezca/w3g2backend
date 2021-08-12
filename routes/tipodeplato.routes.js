@@ -11,17 +11,17 @@ const router = Router();
 
 router.get('/prueba2', prueba2);
 
-// New
-router.post("/tipodeplato/new-tipo", tipodeplatoPost);
-
 // Get All
-router.get("/tipodeplato/all", tipodeplatoAll);
+router.get("/tipodeplato", tipodeplatoAll);
+
+// New
+router.post("/tipodeplato", tipodeplatoPost);
 
 // Edit
-router.put("/tipodeplato/:type", tipodeplatoPut);
+router.put("/tipodeplato/:id", tipodeplatoPut);
 
 
 // Delete
-router.delete("/tipodeplato/delete/:id", tipodeplatoDelete);
+router.delete("/tipodeplato/:id", tipodeplatoDelete);
 
 module.exports = router;

@@ -7,3 +7,5 @@ helpers.isAthenticated = (req, res, next) =>{
     req.flash('error_msg','Not Authorized');
     res.redirect('/users/sigin');
 };
+
+
