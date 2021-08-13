@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
 const config = require('config');
 
-mongoose.connect('mongodb://localhost/dbrestaurante', {
-        useCreateIndex: true,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify:false
-    })
-        .then(db => console.log('DB is connected'))
-        .catch(err => console.error(err));
+mongoose.connect(`${ config.get('dbConfig.host') }${ config.get('dbConfig.port') }${ config.get('dbConfig.dbName') }`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    connectTimeoutMS: 5000
+})
+.then(() => console.log('Connected to mongoDB...'))
+.catch(err => {
+    console.log('Connect error: ', err)
+    throw new Error('Connect mongoose - mongoDB error')
+});
 
 module.exports = mongoose;

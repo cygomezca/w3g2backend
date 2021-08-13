@@ -1,0 +1,9 @@
+{
+    "dbConfig": {
+        "host": "mongodb://localhost",
+        "port": ":27017",
+        "dbName": "/dbrestaurante"
+    },
+    "SECRETORPRIVATEKEY": "MiLlaveSecreta",
+    "PORT": 4000
+}

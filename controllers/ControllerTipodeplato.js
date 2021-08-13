@@ -10,7 +10,6 @@ const tipodeplatoAll = async (req=request, res=response) => {
     res.json( tipodeplato );
 }
 
-
 const tipodeplatoPost = async (req, res) => {
     const { id, type} = req.body;
     const tipodeplato = new Tipodeplato({id,type });

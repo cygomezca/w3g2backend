@@ -12,7 +12,7 @@ router.get('/prueba', prueba);
 router.get("/info", empresaAll);
 
 // Actualizar Empresa
-router.put('/:nombre', empresaPut );
+router.put('/:id', empresaPut );
 
 
 

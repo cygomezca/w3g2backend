@@ -1,20 +1,20 @@
-
+const { response, request } = require('express');
 const Empresa = require('../models/empresa');
 
-const prueba = async (req,res)=> {
+const prueba = async (req = request, res = response)=> {
     res.status(200).send({message: 'probando una acción'});
 }
 
 
-const empresaAll = async (req, res) => {
-    const empresas = await Empresa.find();
-    res.json(empresas);
+const empresaAll = async (req, res = response) => {
+    const empresa = await Empresa.find();
+    res.json(empresa);
 }
 
 const empresaPut = async (req, res) => {
     const {nombre, direccion, departamento, cuidad, telefono} = req.body;
-    await Empresa.findByIdAndUpdate(req.params.nombre, { nombre, direccion, departamento, cuidad, telefono});
-    res.send(Empresa);
+    const empresa = await Empresa.findByIdAndUpdate(req.params.id, { nombre, direccion, departamento, cuidad, telefono});
+    res.send(empresa);
 }
 
 module.exports = {

@@ -1,3 +1,4 @@
+const config = require('config');
 const express = require('express');
 const path= require('path');
 const session= require('express-session');
@@ -9,7 +10,6 @@ const MongoStore = require("connect-mongo");
 
 
 /* const { createAdminUser } = require ("./libs/createUser"); */
-const config = require ( "./config");
 
 require("./config/passport");
 
@@ -18,20 +18,21 @@ const app = express();
 /*createAdminUser();*/
 
 // settings
-app.set("port", config.PORT);
+const port = config.get('PORT');
+app.set("port", port);
 
 // middlewares
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
-app.use(
+/*app.use(
     session({
     secret: "secret",
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: config.MONGODB_URI }),
     })
-);
+);*/
 
 /*app.use(passport.initialize());
 app.use(passport.session());
@@ -52,6 +53,7 @@ app.use(require('./routes/plato.routes'));
 app.use(require('./routes/user.routes'));
 app.use(require('./routes/empresa.routes'));
 app.use(require('./routes/tipodeplato.routes'));
+
 // static files
 app.use(express.static(path.join(__dirname, "public")));
 

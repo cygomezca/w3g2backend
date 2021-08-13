@@ -1,9 +1,9 @@
 {
     "dbConfig": {
-        "host": "mongodb://localhost",
-        "port": ":27017",
-        "dbName": "/customers"
+        "host": "mongodb+srv://dbUser:w3123456@cluster0.tld9e.mongodb.net/test",
+        "port": "",
+        "dbName": "dbrestaurante"
     },
     "SECRETORPRIVATEKEY": "MiLlaveSecreta",
-    "PORT": 4000
+    "PORT": 3000
 }
